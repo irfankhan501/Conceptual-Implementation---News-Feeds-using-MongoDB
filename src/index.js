@@ -14,7 +14,7 @@ app.get("/newFeeds", async (req, res) => {
   const { limit, offset } = req.query;
 
   const lim = limit == undefined ? 10 : isNaN(limit) ? 10 : Number(limit);
-  const off = offset == undefined ? 0 : isNaN(limit) ? 0 : Number(offset);
+  const off = offset == undefined ? 0 : isNaN(offset) ? 0 : Number(offset);
   const result = await newsArticleModel.find().skip(off).limit(lim);
   res.send(result);
 });
