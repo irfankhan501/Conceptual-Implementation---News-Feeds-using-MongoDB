@@ -12,16 +12,11 @@ app.use(express.json());
 
 app.get("/newFeeds", async (req, res) => {
   const { limit, offset } = req.query;
-  if (isNaN(limit) || isNaN(offset)) {
-    const result = await newsArticleModel.find().skip(0).limit(10);
-    res.send(result);
-  } else {
-    const result = await newsArticleModel
-      .find()
-      .skip(Number(offset))
-      .limit(Number(limit));
-    res.send(result);
-  }
+
+  const lim = limit == undefined ? 10 : isNaN(limit) ? 10 : Number(limit);
+  const off = offset == undefined ? 0 : isNaN(limit) ? 0 : Number(offset);
+  const result = await newsArticleModel.find().skip(off).limit(lim);
+  res.send(result);
 });
 
 app.listen(port, () => console.log(`App listening on port ${port}!`));
